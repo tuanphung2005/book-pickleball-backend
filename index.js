@@ -22,7 +22,7 @@ app.use(express.json());
 app.use('/api/playgrounds', playgroundRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-app.post('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('backend is running!');
 });
 
