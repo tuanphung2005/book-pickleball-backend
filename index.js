@@ -22,7 +22,7 @@ app.use(express.json());
 app.use('/api/playgrounds', playgroundRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-// Register endpoint
+// Register endpoint 3
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
