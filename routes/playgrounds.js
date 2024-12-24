@@ -5,7 +5,12 @@ const auth = require('../middleware/auth');
 
 // Get all playgrounds
 router.get('/', async (req, res) => {
-  return res.json({ message: '/ get successful' });
+  try {
+    const [playgrounds] = await pool.execute('SELECT * FROM playgrounds');
+    res.json(playgrounds);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Get user's playgrounds
