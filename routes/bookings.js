@@ -172,7 +172,7 @@ router.patch('/:id/rating', auth, async (req, res) => {
       [rating, req.params.id]
     );
     
-    // Mark booking as rated
+
     await pool.execute(
       'UPDATE bookings SET rated = TRUE WHERE id = ?',
       [req.params.id]

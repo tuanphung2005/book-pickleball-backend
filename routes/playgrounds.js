@@ -132,7 +132,7 @@ router.patch('/:id', auth, async (req, res) => {
 // Delete playground
 router.delete('/:id', auth, async (req, res) => {
   try {
-    // First check if playground belongs to user
+
     const [playground] = await pool.execute(
       'SELECT * FROM playgrounds WHERE id = ? AND userId = ?',
       [req.params.id, req.userId]
@@ -142,7 +142,6 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
-    // Then delete
     await pool.execute(
       'DELETE FROM playgrounds WHERE id = ? AND userId = ?',
       [req.params.id, req.userId]
