@@ -5,19 +5,7 @@ const auth = require('../middleware/auth');
 
 // Get all playgrounds
 router.get('/', async (req, res) => {
-  try {
-    const [playgrounds] = await pool.execute(
-      `SELECT p.*, u.phone as ownerPhone 
-       FROM playgrounds p 
-       JOIN users u ON p.userId = u.id`,
-      [],
-      { timeout: 9000 } // 9 second timeout
-    );
-    res.json(playgrounds);
-  } catch (error) {
-    console.error('Database error:', error);
-    res.status(500).json({ error: 'Database connection timeout' });
-  }
+  return res.json({ message: '/ get successful' });
 });
 
 // Get user's playgrounds
