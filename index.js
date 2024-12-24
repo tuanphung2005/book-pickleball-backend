@@ -10,7 +10,7 @@ const bookingRoutes = require('./routes/bookings');
 const app = express();
 
 const corsOptions = {
-  origin: '*', // For development. In production, specify your frontend domain
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
