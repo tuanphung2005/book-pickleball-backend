@@ -9,11 +9,14 @@ router.get('/', async (req, res) => {
     const [playgrounds] = await pool.execute(
       `SELECT p.*, u.phone as ownerPhone 
        FROM playgrounds p 
-       JOIN users u ON p.userId = u.id`
+       JOIN users u ON p.userId = u.id`,
+      [],
+      { timeout: 9000 } // 9 second timeout
     );
     res.json(playgrounds);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Database error:', error);
+    res.status(500).json({ error: 'Database connection timeout' });
   }
 });
 
