@@ -153,7 +153,7 @@ router.patch('/:id/confirm', auth, async (req, res) => {
     }
 
     await pool.execute(
-      'UPDATE bookings SET status = "confirmed" WHERE id = ?',
+      "UPDATE bookings SET status = 'confirmed' WHERE id = ?",
       [req.params.id]
     );
 
