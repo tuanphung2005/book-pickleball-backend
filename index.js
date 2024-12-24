@@ -36,7 +36,7 @@ app.post('/api/register', async (req, res) => {
     const token = jwt.sign({ userId: result.insertId }, process.env.JWT_SECRET);
     res.json({ 
       token,
-      name // Add this to send back the user's name
+      name
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

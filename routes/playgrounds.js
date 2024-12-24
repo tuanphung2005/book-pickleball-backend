@@ -6,7 +6,11 @@ const auth = require('../middleware/auth');
 // Get all playgrounds
 router.get('/', async (req, res) => {
   try {
-    const [playgrounds] = await pool.execute('SELECT * FROM playgrounds');
+    const [playgrounds] = await pool.execute(
+      `SELECT p.*, u.phone as ownerPhone 
+       FROM playgrounds p 
+       JOIN users u ON p.userId = u.id`
+    );
     res.json(playgrounds);
   } catch (error) {
     res.status(500).json({ error: error.message });
