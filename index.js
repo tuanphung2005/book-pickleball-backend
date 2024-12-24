@@ -14,6 +14,10 @@ app.use(express.json());
 app.use('/api/playgrounds', playgroundRoutes);
 app.use('/api/bookings', bookingRoutes);
 
+app.post('/', (req, res) => {
+  res.send('backend is running!');
+});
+
 // Register endpoint
 app.post('/api/register', async (req, res) => {
   try {
