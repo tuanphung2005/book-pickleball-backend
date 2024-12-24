@@ -166,27 +166,26 @@ router.patch('/:id/confirm', auth, async (req, res) => {
 // Update playground rating and mark booking as rated
 router.patch('/:id/rating', auth, async (req, res) => {
   try {
-    const bookingId = req.params.id;
-    const { rating, playgroundId } = req.body;
+    const { rating, bookingId } = req.body;
     
-    // Get current total ratings and count
+    // Update the booking's rating first
+    await pool.execute(
+      'UPDATE bookings SET rated = TRUE, rating = ? WHERE id = ?',
+      [rating, bookingId]
+    );
+
+    // Then calculate and update playground's average rating
     const [ratingResult] = await pool.execute(
       'SELECT AVG(rating) as avgRating FROM bookings WHERE playgroundId = ? AND rated = TRUE AND rating IS NOT NULL',
-      [playgroundId]
+      [req.params.id]
     );
 
     const avgRating = ratingResult[0].avgRating || 0;
 
-    // Update playground with average rating
+    // Update playground rating
     await pool.execute(
       'UPDATE playgrounds SET rating = ? WHERE id = ?',
-      [avgRating, playgroundId]
-    );
-    
-    // Update the booking's rating
-    await pool.execute(
-      'UPDATE bookings SET rated = TRUE, rating = ? WHERE id = ?',
-      [rating, bookingId]
+      [avgRating, req.params.id]
     );
 
     res.json({ message: 'Rating updated successfully' });
