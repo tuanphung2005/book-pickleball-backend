@@ -8,7 +8,15 @@ const playgroundRoutes = require('./routes/playgrounds');
 const bookingRoutes = require('./routes/bookings');
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: '*', // For development. In production, specify your frontend domain
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/playgrounds', playgroundRoutes);
